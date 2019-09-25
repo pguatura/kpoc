@@ -5,6 +5,10 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+    }
+    
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.pguatura.kpocapp"
