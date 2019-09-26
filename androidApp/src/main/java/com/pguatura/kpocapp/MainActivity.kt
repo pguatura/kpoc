@@ -1,13 +1,10 @@
 package com.pguatura.kpocapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.pguatura.kpoc.api.ApplicationApi
 import com.pguatura.kpoc.api.createApplicationScreenMessage
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,11 +14,7 @@ class MainActivity : AppCompatActivity() {
         val api = ApplicationApi()
 
         api.about {
-            GlobalScope.apply {
-                launch(Dispatchers.Main) {
-                    findViewById<TextView>(R.id.teste).text = it
-                }
-            }
+            findViewById<TextView>(R.id.teste).text = it
         }
         findViewById<TextView>(R.id.teste).text = createApplicationScreenMessage()
     }

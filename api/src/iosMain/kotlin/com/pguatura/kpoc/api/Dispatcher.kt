@@ -16,3 +16,5 @@ internal class NsQueueDispatcher(
         }
     }
 }
+
+actual fun encapsulate(function: () -> Unit) = function()

@@ -17,6 +17,8 @@ fun createApplicationScreenMessage() : String {
 
 internal expect val ApplicationDispatcher: CoroutineDispatcher
 
+expect fun encapsulate(function: () -> Unit)
+
 class ApplicationApi {
     private val client = HttpClient()
 
@@ -29,8 +31,11 @@ class ApplicationApi {
                     url(this@ApplicationApi.address.toString())
                 }
 
-                callback(result)
+                encapsulate {
+                    callback(result)
+                }
             }
         }
+
     }
 }
