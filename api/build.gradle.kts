@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
-import javax.lang.model.util.ElementFilter
 
 plugins {
     kotlin("multiplatform")
@@ -28,20 +27,27 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0")
+        implementation( "io.ktor:ktor-client-core:1.1.1")
+        implementation("io.ktor:ktor-client-json:1.1.1")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
+        implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.2")
+        implementation ("io.ktor:ktor-client-android:1.2.3")
+        implementation ("io.ktor:ktor-client-json-jvm:1.2.3")
+    }
+
+    sourceSets["iosMain"].dependencies {
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.2")
+        implementation("io.ktor:ktor-client-ios:1.2.3")
+        implementation("io.ktor:ktor-client-json-native:1.2.3")
     }
 
 }
 
 
-dependencies {
-    commonMainImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0")
-    commonMainImplementation( "io.ktor:ktor-client-core:1.1.1")
-    commonMainImplementation("io.ktor:ktor-client-json:1.1.1")
-}
 
 val packForXcode by tasks.creating(Sync::class) {
     group = "Build"

@@ -10,16 +10,22 @@ import UIKit
 import api
 
 class ViewController: UIViewController {
+    let api = ApplicationApi()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 21))
-        label.center = CGPoint(x: 160, y: 285)
-        label.textAlignment = .center
-        label.font = label.font.withSize(25)
-        label.text = CommonKt.createApplicationScreenMessage()
-        view.addSubview(label)
+        
+        api.about { (description) in
+            let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 500))
+            label.backgroundColor = UIColor.blue
+            label.center = CGPoint(x: 160, y: 285)
+            label.textAlignment = .center
+            label.numberOfLines = 0
+            label.font = label.font.withSize(25)
+            label.text = description.replacingOccurrences(of: "^\\s*", with: "", options: .regularExpression)
+            self.view.addSubview(label)
+        }
     }
 
 

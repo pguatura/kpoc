@@ -1,2 +1,3 @@
 include ':androidApp', ':api'
 rootProject.name='kpocApp'
+enableFeaturePreview('GRADLE_METADATA')
