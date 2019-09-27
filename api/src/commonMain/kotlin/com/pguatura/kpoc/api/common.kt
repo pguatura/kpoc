@@ -16,6 +16,7 @@ import io.ktor.http.contentType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import kotlinx.serialization.Serializable
 
 
 expect fun platformName(): String
@@ -31,7 +32,9 @@ expect fun encapsulate(function: () -> Unit)
 class ApplicationApi {
     private val client = HttpClient{
         install(JsonFeature){
-            serializer = defaultSerializer()
+            serializer = defaultSerializer().apply{
+
+            }
         }
         install(Logging) {
             logger = Logger.DEFAULT
@@ -81,4 +84,5 @@ class ApplicationApi {
     }
 }
 
+@Serializable
 data class Teste(val query: String)

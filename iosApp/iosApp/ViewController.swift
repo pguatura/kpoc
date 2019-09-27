@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         
-        api.about { (description) in
+        api.jobs { (description) in
             let label = UILabel(frame: CGRect(x: 0, y: 0, width: 300, height: 500))
             label.backgroundColor = UIColor.blue
             label.center = CGPoint(x: 160, y: 285)
