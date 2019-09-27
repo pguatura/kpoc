@@ -3,6 +3,7 @@ package com.pguatura.kpoc.api
 import io.ktor.client.HttpClient
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.defaultSerializer
+import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.client.features.logging.DEFAULT
 import io.ktor.client.features.logging.LogLevel
 import io.ktor.client.features.logging.Logger
@@ -17,6 +18,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JSON
 
 
 expect fun platformName(): String
@@ -32,8 +34,8 @@ expect fun encapsulate(function: () -> Unit)
 class ApplicationApi {
     private val client = HttpClient{
         install(JsonFeature){
-            serializer = defaultSerializer().apply{
-
+            serializer = KotlinxSerializer(JSON.nonstrict).apply {
+                setMapper(Teste::class, Teste.serializer())
             }
         }
         install(Logging) {
