@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 plugins {
     kotlin("multiplatform")
+    id("kotlinx-serialization")
 }
 
 
@@ -27,22 +28,27 @@ kotlin {
 
     sourceSets["commonMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.1.0")
-        implementation( "io.ktor:ktor-client-core:1.1.1")
-        implementation("io.ktor:ktor-client-json:1.1.1")
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.0")
+        implementation("io.ktor:ktor-client-core:1.2.4")
+        implementation("io.ktor:ktor-client-json:1.2.4")
+        implementation("io.ktor:ktor-client-gson:1.2.4")
+        implementation("io.ktor:ktor-client-logging:1.2.4")
     }
 
     sourceSets["androidMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.2.2")
-        implementation ("io.ktor:ktor-client-android:1.2.3")
-        implementation ("io.ktor:ktor-client-json-jvm:1.2.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.11.1")
+        implementation ("io.ktor:ktor-client-android:1.2.4")
+        implementation("io.ktor:ktor-client-logging-jvm:1.2.4")
     }
 
     sourceSets["iosMain"].dependencies {
         implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-native:1.2.2")
-        implementation("io.ktor:ktor-client-ios:1.2.3")
-        implementation("io.ktor:ktor-client-json-native:1.2.3")
+        implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.11.1")
+        implementation("io.ktor:ktor-client-ios:1.2.4")
+        implementation("io.ktor:ktor-client-json-native:1.2.4")
+        implementation("io.ktor:ktor-client-logging-native:1.2.4")
     }
 
 }

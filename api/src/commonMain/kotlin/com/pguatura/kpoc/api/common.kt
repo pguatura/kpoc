@@ -1,9 +1,18 @@
 package com.pguatura.kpoc.api
 
 import io.ktor.client.HttpClient
+import io.ktor.client.features.json.JsonFeature
+import io.ktor.client.features.json.defaultSerializer
+import io.ktor.client.features.logging.DEFAULT
+import io.ktor.client.features.logging.LogLevel
+import io.ktor.client.features.logging.Logger
+import io.ktor.client.features.logging.Logging
 import io.ktor.client.request.get
+import io.ktor.client.request.post
 import io.ktor.client.request.url
+import io.ktor.http.ContentType
 import io.ktor.http.Url
+import io.ktor.http.contentType
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,7 +29,15 @@ internal expect val ApplicationDispatcher: CoroutineDispatcher
 expect fun encapsulate(function: () -> Unit)
 
 class ApplicationApi {
-    private val client = HttpClient()
+    private val client = HttpClient{
+        install(JsonFeature){
+            serializer = defaultSerializer()
+        }
+        install(Logging) {
+            logger = Logger.DEFAULT
+            level = LogLevel.HEADERS
+        }
+    }
 
     var address = Url("https://tools.ietf.org/rfc/rfc1866.txt")
 
@@ -38,4 +55,30 @@ class ApplicationApi {
         }
 
     }
+
+    fun jobs(callback: (String) -> Unit) {
+        GlobalScope.apply {
+            launch(ApplicationDispatcher) {
+                try{
+
+                    val result: String = client.post {
+                        url("https://api.graphql.jobs")
+                        contentType(ContentType.Application.Json)
+                        body = Teste("{\n  \n  jobs{\n    id,\n    title\n  }\n  \n}")
+                    }
+
+                    encapsulate {
+                        callback(result)
+                    }
+                }catch(e: Exception){
+                    encapsulate {
+                        callback(e.toString())
+                    }
+                }
+            }
+        }
+
+    }
 }
+
+data class Teste(val query: String)

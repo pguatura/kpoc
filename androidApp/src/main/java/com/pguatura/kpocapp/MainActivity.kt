@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val api = ApplicationApi()
 
-        api.about {
+        api.jobs {
             findViewById<TextView>(R.id.teste).text = it
         }
         findViewById<TextView>(R.id.teste).text = createApplicationScreenMessage()
